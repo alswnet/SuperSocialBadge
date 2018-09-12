@@ -1,3 +1,11 @@
+//Configuraciones de RED
+char ssid3[] = "G_WIFI"; //Nombre de Red 1
+char password3[] = "Medicina09";  //Contrasenna de Red 1
+char ssid2[] = "ALSW"; //Nombre de Red 2
+char password2[] = "2526-4897";  //Contrasenna de Red 2
+char ssid1[] = "ALSW2"; //Nombre de Red 1
+char password1[] = "7210-3607";  //Contrasenna de Red 1
+
 void ConectarWifi() {
 
   wifiMulti.addAP(ssid1, password1);
@@ -11,7 +19,6 @@ void ConectarWifi() {
     Serial.println("Mi IP es: ");
     Serial.println(WiFi.localIP());
   }
-
 }
 
 void WifiActiva() {

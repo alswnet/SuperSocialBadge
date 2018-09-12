@@ -7,7 +7,6 @@
 #define Youtube 1
 #define Instagram 2
 
-
 #include <WiFi.h>//Libreria de ESP8266
 #include <WiFiMulti.h>
 #include <WiFiClientSecure.h> //Libreria de Consultas Escriptadas
@@ -20,14 +19,6 @@ WiFiClientSecure client;
 #include "JsonStreamingParser.h"///Libreria de Decifrado Json
 #include <Adafruit_NeoPixel.h>
 Adafruit_NeoPixel strip = Adafruit_NeoPixel(13, 4, NEO_GRB + NEO_KHZ800);
-
-//Configuraciones de RED
-char ssid3[] = "ALSW2"; //Nombre de Red 1
-char password3[] = "7210-3607";  //Contrasenna de Red 1
-char ssid2[] = "ALSW"; //Nombre de Red 2
-char password2[] = "2526-4897";  //Contrasenna de Red 2
-char ssid1[] = "ALSW2"; //Nombre de Red 1
-char password1[] = "7210-3607";  //Contrasenna de Red 1
 
 unsigned long EsperaEstreConsulta = 1000;//cada n/1000 segundos
 unsigned long EsperaCambioDisplay = 10000;//cada n/1000 Segundo
@@ -59,6 +50,8 @@ void setup() {
     0);  /* Procesador a poner la operacion */
   delay(100);
 
+  InicializarSD();
+  CargarToken();
   ConectarWifi();
 
   Estado = 1;

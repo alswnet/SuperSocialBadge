@@ -1,4 +1,3 @@
-
 byte segmentClock = 13;//
 byte segmentLatch = 12;//
 byte segmentData = 16;

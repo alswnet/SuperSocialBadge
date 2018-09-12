@@ -4,7 +4,7 @@
 FacebookApi *apifb;
 
 void IniciarFacebook() {
-  apifb = new FacebookApi(client, FACEBOOK_ACCESS_TOKEN, FACEBOOK_APP_ID, FACEBOOK_APP_SECRET);
+  apifb = new FacebookApi(client, Facebook_KEY);
 }
 
 //Consulta para buscar los seguidores una Fanpage de Facebook

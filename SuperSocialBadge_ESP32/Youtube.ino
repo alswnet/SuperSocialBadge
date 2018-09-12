@@ -1,7 +1,7 @@
 #ifdef YoutubeID
 
 #include <YoutubeApi.h> //Libreria de Youtube
-YoutubeApi api(API_KEY, client);
+YoutubeApi api(YOUTUBE_KEY, client);
 
 //Consulta para buscar cuantos subcriptores en Youtube
 boolean getYoutube() {
