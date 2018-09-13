@@ -6,29 +6,42 @@ void MultiCore( void * pvParameters ) {
   strip.show();
 
   while (true) {
-    switch (Estado) {
-      case 0:
-        Serial.println("Esperando Wifi");
-        colorWipe(strip.Color(255, 0, 0), 50);
-        strip.show();
+    if (digitalRead(Boton) == 0) {
+      Serial.println("Preciono Boton");
+    }
+    switch (Modo) {
+      case Menu:
+
         break;
-      case 1:
-        Serial.println("Esperando RedesSociales");
-        MostarNumero( 0, CantidadDisplay);
-        colorWipe(strip.Color(0, 255, 0), 50);
-        strip.show();
+      case Social:
+        switch (Estado) {
+          case 0:
+            Serial.println("Esperando Wifi");
+            colorWipe(strip.Color(255, 0, 0), 50);
+            strip.show();
+            break;
+          case 1:
+            Serial.println("Esperando RedesSociales");
+            MostarNumero( 0, CantidadDisplay);
+            colorWipe(strip.Color(0, 255, 0), 50);
+            strip.show();
+            break;
+          case 2:
+            Serial.println("---Datos----");
+            colorWipe(strip.Color(0, 0, 0), 50); // Red
+            strip.show();
+            Estado = 3;
+            break;
+          case 3:
+            CambiarDisplay();
+            break;
+          default:
+            Serial.println("Habla con chepecarlos tenemos un problema");
+            break;
+        }
         break;
-      case 2:
-        Serial.println("---Datos----");
-        colorWipe(strip.Color(0, 0, 0), 50); // Red
-        strip.show();
-        Estado = 3;
-        break;
-      case 3:
-        CambiarDisplay();
-        break;
-      default:
-        Serial.println("Habla con chepecarlos tenemos un problema");
+      case App:
+
         break;
     }
     digitalWrite(LedIndicador, 0);

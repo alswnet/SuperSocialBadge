@@ -7,6 +7,10 @@
 #define Youtube 1
 #define Instagram 2
 
+#define Menu 0
+#define Social 1
+#define App 2
+
 #include <WiFi.h>//Libreria de ESP8266
 #include <WiFiMulti.h>
 #include <WiFiClientSecure.h> //Libreria de Consultas Escriptadas
@@ -28,14 +32,20 @@ unsigned long TiempoActual = 0;
 unsigned long ValocidadBarrido = 300;
 
 const int LedIndicador = 5;
+const int Boton = 0;
 const int CantidadDisplay = 4;
 int Mostar = 1;
 int Estado = 0;
+int Modo = App;
 int Sub[3] = {0, 0, 0};
+int SubAnterior[3] = {0, 0, 0};
+
+#include "BluetoothSerial.h"
 
 void setup() {
   Serial.begin(115200);
   pinMode(LedIndicador, OUTPUT);
+  pinMode(Boton, INPUT_PULLUP);
 
   //Activando codig a cargarse en procesador 0
   //Procesador 1 Exclusico para Wifi
@@ -52,40 +62,47 @@ void setup() {
 
   InicializarSD();
   CargarToken();
-  ConectarWifi();
 
-  Estado = 1;
+  switch (Modo) {
+    case Menu:
 
-#ifdef FacebookID
-  IniciarFacebook();
-  delay(10);
-#endif
+      break;
+    case Social:
+      ConectarWifi();
+      CargarSocial();
+      Estado = 1;
 
-#ifdef InstagramID
-  getInstagram();
-  delay(10);
-#endif
+      break;
+    case App:
+      ActivarBluetooth();
+      break;
+  }
 
-#ifdef YoutubeID
-  getYoutube();
-  delay(10);
-#endif
-
-#ifdef FacebookID
-  getFacebook();
-  delay(10);
-#endif
+  delay(200);
 
   Estado = 2;
 
 }
 
 void loop() {
-  WifiActiva();
+  switch (Modo) {
+    case Menu:
 
-  TiempoActual = millis();
+      break;
+    case Social:
+      WifiActiva();
+      TiempoActual = millis();
+      getSegidores();
 
-  getSegidores();
+      break;
+    case App:
+      LeerBluetooth();
+      break;
+    default:
+
+      break;
+  }
+  delay(200);
 }
 
 
@@ -121,4 +138,28 @@ void getSegidores() {
   }
 }
 
+
+void CargarSocial() {
+  //TODO Anadir cargar segidores
+#ifdef FacebookID
+  IniciarFacebook();
+  delay(10);
+#endif
+
+#ifdef InstagramID
+  getInstagram();
+  delay(10);
+#endif
+
+#ifdef YoutubeID
+  getYoutube();
+  delay(10);
+#endif
+
+#ifdef FacebookID
+  getFacebook();
+  delay(10);
+#endif
+
+}
 
