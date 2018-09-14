@@ -10,7 +10,6 @@ void InicializarPantallas() {
   digitalWrite(segmentClock, LOW);
   digitalWrite(segmentData, LOW);
   digitalWrite(segmentLatch, LOW);
-
 }
 
 void MostarRandom(int Digitos) {

@@ -1,10 +1,8 @@
 void MultiCore( void * pvParameters ) {
   Serial.println("Procesos en Procesador 0 Iniciados");
   InicializarPantallas();
-  strip.begin();
+  IniciarNeoPizel();
   MostarNumero(9999, CantidadDisplay);
-  strip.show();
-
   while (true) {
     if (digitalRead(Boton) == 0) {
       Serial.println("Preciono Boton");
@@ -17,19 +15,16 @@ void MultiCore( void * pvParameters ) {
         switch (Estado) {
           case 0:
             Serial.println("Esperando Wifi");
-            colorWipe(strip.Color(255, 0, 0), 50);
-            strip.show();
+            colorWipe(Rojo, 50);
             break;
           case 1:
             Serial.println("Esperando RedesSociales");
             MostarNumero( 0, CantidadDisplay);
-            colorWipe(strip.Color(0, 255, 0), 50);
-            strip.show();
+            colorWipe(Azul, 50);
             break;
           case 2:
             Serial.println("---Datos----");
-            colorWipe(strip.Color(0, 0, 0), 50); // Red
-            strip.show();
+            colorWipe(Blanco, 50); // Red
             Estado = 3;
             break;
           case 3:
@@ -48,7 +43,7 @@ void MultiCore( void * pvParameters ) {
     delay(500);
     digitalWrite(LedIndicador, 1);
     delay(500);
-
+    ActualizarNeoPixel();
   }
 }
 
@@ -91,5 +86,7 @@ int SiquienteRed(int Actual) {
 #endif
   }
 }
+
+
 
 

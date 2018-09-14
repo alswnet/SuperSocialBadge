@@ -9,8 +9,9 @@
 #define Columna 2
 #define Fila 3
 #define ColorBT 4
+#define PlayBT 5
 
-int CantidadFila = 16;
+
 char MensajeBT[5];
 int PunteroBT = 0;
 int PF = -1;
@@ -23,9 +24,9 @@ int EstadoBT = 0;
 void ActivarBluetooth() {
   SerialBT.begin("SSB1");
   Serial.println("Iniciando BT");
-  for (int i = 0; i < CantidadFila; i++) {
-    for (int j = 0; j < CantidadFila; j++) {
-      PantallaBT[i][j] = 0;
+  for (int f = 0; f < CantidadLado; f++) {
+    for (int c = 0; c < CantidadLado; c++) {
+      PantallaBT[f][c] = 0;
     }
   }
   Serial.println();
@@ -87,15 +88,17 @@ void LeerBluetooth() {
           Serial.print(" PF ");
           Serial.print(PF);
           Serial.print(" Color ");
-          Serial.println( PantallaBT[PC][PF]);
+          Serial.println( PantallaBT[PF][PC]);
           MostarPTBT();
           EstadoBT = Esperando;
           SiquienteActualizar(Mensaje);
         }
         break;
+      case PlayBT:
+        //Todo Activar Animacion
+        break;
       case Guardar:
         //TODO Guardas secuencia
-        Serial.println("Funcion de Guardas");
         if (Mensaje >= '0' and Mensaje <= '9') {
           MensajeBT[PunteroBT] = Mensaje;
           PunteroBT++;
@@ -111,10 +114,10 @@ void LeerBluetooth() {
             Serial.print(NombreFrame);
             File ArchivoFrame = SD.open(NombreFrame, FILE_WRITE);
             if (ArchivoFrame) {
-              for (int i = 0; i < CantidadFila; i++) {
-                for (int j = 0; j < CantidadFila; j++) {
-                  ArchivoFrame.print(PantallaBT[i][j]);
-                  if (j != CantidadFila - 1) {
+              for (int f = 0; f < CantidadLado; f++) {
+                for (int c = 0; c < CantidadLado; c++) {
+                  ArchivoFrame.print(PantallaBT[f][c]);
+                  if (c != CantidadLado - 1) {
                     ArchivoFrame.print(",");
                   }
                 }
@@ -126,9 +129,9 @@ void LeerBluetooth() {
               Serial.println("Error no existe el archivo");
             }
           }
+          EstadoBT = Esperando;
+          SiquienteActualizar(Mensaje);
         }
-        Estado = Esperando;
-        //MostarPTBT();
         break;
     }
   }
@@ -136,13 +139,14 @@ void LeerBluetooth() {
 
 void MostarPTBT() {
   Serial.println("##############################");
-  for (int i = 0; i < CantidadFila; i++) {
-    for (int j = 0; j < CantidadFila; j++) {
-      if (PantallaBT[i][j] == 0) {
+  for (int f = 0; f < CantidadLado; f++) {
+    for (int c = 0; c < CantidadLado; c++) {
+      ColorPixel(f, c, PantallaBT[f][c]);
+      if (PantallaBT[f][c] == 0) {
         Serial.print(" ");
       }
       else {
-        Serial.print(PantallaBT[i][j]);
+        Serial.print(PantallaBT[f][c]);
       }
     }
     Serial.println();
@@ -168,6 +172,12 @@ void SiquienteActualizar(char Mensaje) {
     Serial.println("Color");
     EstadoBT = ColorBT;
   }
+  else if (Mensaje == 'P' || Mensaje == 'p' ) {
+    Serial.println("PLAY");
+    EstadoBT = PlayBT;
+  }
+
+
   MensajeBT[0] = 0;
   PunteroBT = 0;
 }

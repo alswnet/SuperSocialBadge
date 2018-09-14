@@ -1,7 +1,14 @@
+#include <WiFi.h>
+#include <WiFiMulti.h>
+#include <WiFiClientSecure.h> //Libreria de Consultas Escriptadas
+#include "Contrasenna.h"//Archivo con info de contrasenas para hacer las consultas
+#include <ArduinoJson.h>//Libreria de Decifrado Json
+#include "JsonStreamingParser.h"///Libreria de Decifrado Json
+
 //ID de Redes Sociales
-#define InstagramID "alswnet"//usuario de Insgramam
-#define FacebookID "163069780414846"//ID de fanpage de Facebook
-#define YoutubeID "UCS5yb75qx5GFOG-uV5JLYlQ" // ID de Canal de Youtube
+#define InstagramID "alswnet"//usuario ALSW de Insgramam 
+#define FacebookID "163069780414846"//ID ALSW de fanpage de Facebook
+#define YoutubeID "UCS5yb75qx5GFOG-uV5JLYlQ" // ID ALSW de Canal de Youtube
 
 #define Facebook 0
 #define Youtube 1
@@ -10,35 +17,34 @@
 #define Menu 0
 #define Social 1
 #define App 2
+#define GPS 3
 
-#include <WiFi.h>//Libreria de ESP8266
-#include <WiFiMulti.h>
-#include <WiFiClientSecure.h> //Libreria de Consultas Escriptadas
-#include "Contrasenna.h"//Archivo con info de contrasenas para hacer las consultas
+#define Negro 0
+#define Blanco 1
+#define Rojo 2
+#define Azul 3
+#define Verde 4
 
 WiFiMulti wifiMulti;
 WiFiClientSecure client;
 
-#include <ArduinoJson.h>//Libreria de Decifrado Json
-#include "JsonStreamingParser.h"///Libreria de Decifrado Json
-#include <Adafruit_NeoPixel.h>
-Adafruit_NeoPixel strip = Adafruit_NeoPixel(13, 4, NEO_GRB + NEO_KHZ800);
-
-unsigned long EsperaEstreConsulta = 1000;//cada n/1000 segundos
-unsigned long EsperaCambioDisplay = 10000;//cada n/1000 Segundo
 unsigned long SiquientePreguntaAPI = 0;
 unsigned long SiquienteCambioDisplay = 0;
 unsigned long TiempoActual = 0;
-unsigned long ValocidadBarrido = 300;
 
-const int LedIndicador = 5;
-const int Boton = 0;
-const int CantidadDisplay = 4;
-int Mostar = 1;
-int Estado = 0;
-int Modo = App;
-int Sub[3] = {0, 0, 0};
-int SubAnterior[3] = {0, 0, 0};
+const unsigned long ValocidadBarrido = 300;
+const unsigned long EsperaEstreConsulta = 1000;//cada n/1000 segundos
+const unsigned long EsperaCambioDisplay = 10000;//cada n/1000 Segundo
+const unsigned int LedIndicador = 5;
+const unsigned int Boton = 0;
+const unsigned int CantidadDisplay = 4;
+const unsigned int CantidadLado = 16;
+
+unsigned int Mostar = 1;
+unsigned int Estado = 0;
+unsigned int Modo = App;
+unsigned int Sub[3] = {0, 0, 0};
+unsigned int SubAnterior[3] = {0, 0, 0};
 
 #include "BluetoothSerial.h"
 
@@ -61,6 +67,7 @@ void setup() {
   delay(100);
 
   InicializarSD();
+  IniciarNeoPizel();
   CargarToken();
 
   switch (Modo) {
@@ -123,9 +130,9 @@ void getSegidores() {
 #ifdef YoutubeID
     Serial.print(".Y.");
     if (NuevoSegidor || getYoutube()) {
-      rainbow(20);
-      colorWipe(strip.Color(0, 0, 0), 50); // Red
-      strip.show();
+    //  rainbow(20);
+    //  colorWipe(strip.Color(0, 0, 0), 50); // Red
+   //   strip.show();
     }
 #endif
     if (NuevoSegidor) {

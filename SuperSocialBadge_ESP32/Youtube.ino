@@ -3,6 +3,7 @@
 #include <YoutubeApi.h> //Libreria de Youtube
 YoutubeApi api(YOUTUBE_KEY, client);
 
+//TODO Guardas SD
 //Consulta para buscar cuantos subcriptores en Youtube
 boolean getYoutube() {
 

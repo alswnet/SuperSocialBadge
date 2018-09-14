@@ -7,6 +7,7 @@ void IniciarFacebook() {
   apifb = new FacebookApi(client, Facebook_KEY);
 }
 
+//TODO Guardas SD
 //Consulta para buscar los seguidores una Fanpage de Facebook
 boolean getFacebook() {
   int pageLikes = apifb->getPageFanCount(FacebookID);

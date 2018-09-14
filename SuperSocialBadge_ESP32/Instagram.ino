@@ -2,6 +2,7 @@
 #include "InstagramStats.h"//Libreria de Instagram
 InstagramStats instaStats(client);
 
+//TODO Guardas SD
 //Consulta para buscar cuando segirores en Instagram
 boolean getInstagram() {
   InstagramUserStats response = instaStats.getUserStats(InstagramID);
