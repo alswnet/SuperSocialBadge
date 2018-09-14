@@ -104,17 +104,19 @@ void LeerBluetooth() {
           MensajeBT[PunteroBT] = 0;
           int Frame = atoi(MensajeBT);
           if (Frame >= 0 && Frame <= 4) {
-            String NombreFrame = "Frame";
+            String NombreFrame = "/frame";
             NombreFrame =  NombreFrame + Frame;
             NombreFrame =  NombreFrame + ".txt";
+            Serial.print("Empezando a Escribir Archivo: ");
+            Serial.print(NombreFrame);
             File ArchivoFrame = SD.open(NombreFrame, FILE_WRITE);
             if (ArchivoFrame) {
-              Serial.print("Empezando a Escribir Archivo: ");
-              Serial.print(NombreFrame);
               for (int i = 0; i < CantidadFila; i++) {
                 for (int j = 0; j < CantidadFila; j++) {
                   ArchivoFrame.print(PantallaBT[i][j]);
-                  ArchivoFrame.print(",");
+                  if (j != CantidadFila - 1) {
+                    ArchivoFrame.print(",");
+                  }
                 }
                 ArchivoFrame.print(";\n");
               }
@@ -126,7 +128,7 @@ void LeerBluetooth() {
           }
         }
         Estado = Esperando;
-        MostarPTBT();
+        //MostarPTBT();
         break;
     }
   }
