@@ -1,6 +1,6 @@
-byte segmentClock = 13;//
-byte segmentLatch = 12;//
-byte segmentData = 16;
+byte segmentClock = 3;
+byte segmentLatch = 3;
+byte segmentData = 12;
 
 void InicializarPantallas() {
   pinMode(segmentClock, OUTPUT);
