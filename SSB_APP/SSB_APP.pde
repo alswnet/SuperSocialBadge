@@ -1,16 +1,46 @@
+import java.util.*;
+import ketai.ui.*;
+import ketai.net.bluetooth.*;
+import ketai.sensors.*;
+
+KetaiBluetooth Kbt;
+KetaiSensor Ksen;
+ArrayList listaDisp;
+
 int CantidadFilas = 16 ;
 int CantidadColores = 7;
-int CantidadBoton = 4;
+int CantidadBoton = 5;
 int ColorSelecionado = 3;
+int ColorSelecionadoAnterior = 3;
+float TiempoColor = 0;
 
 int[][] PantallaBT = new int[CantidadFilas][CantidadFilas];
+int[][] PantallaBTAnterior = new int[CantidadFilas][CantidadFilas];
+
 float AnchoCuadro;
 float ColorFilas;
 float AnchoFrame;
+
 void setup() {
-   fullScreen();
- // size(360, 640);
-  //noStroke();
+  fullScreen();
+  orientation(PORTRAIT);    
+  // size(360, 640);
+
+  //Inicializa las clases de bluetooth y sensores
+  Kbt = new KetaiBluetooth(this);
+  Ksen = new KetaiSensor(this);
+  Ksen.start();
+
+  //Obtiene la lista de dispositivos bluetooth emparejados
+  listaDisp = Kbt.getPairedDeviceNames();
+
+  //Imprime la lista en terminal
+  Iterator itr = listaDisp.iterator();
+  println("Dispositivos emparejados:");
+  while (itr.hasNext()) {
+    println(itr.next());
+  }
+
   colorMode(RGB, height, height, height);
   rectMode(CORNER);
   AnchoCuadro = float(width)/CantidadFilas;
@@ -24,6 +54,8 @@ void setup() {
 }
 
 void draw() {
+
+
   background(50);
   MostarColores();
   MostarPantalla();
@@ -55,6 +87,7 @@ void MostarPantalla() {
     }
   }
 }
+
 void MostarColores() {
   pushMatrix();
   pushStyle();
@@ -71,94 +104,4 @@ void MostarColores() {
   }
   popStyle();
   popMatrix();
-}
-
-void ColorActual(int ColorActual) {
-  if (ColorSelecionado == ColorActual ) {
-    stroke(1000, 1000, 0);
-    strokeWeight(10);
-  } else {
-    stroke(0);
-    strokeWeight(5);
-  }
-  switch(ColorActual) {
-  case 0: 
-    fill(0, 0, 0);
-    break;
-  case 1: 
-    fill(0, 0, 1000);
-    break;
-  case 2: 
-    fill(1000, 0, 0);
-    break;
-  case 3: 
-    fill(0, 1000, 0);
-    break;
-  case 4: 
-    fill(1000, 400, 400);
-    break;
-  case 5: 
-    fill(400, 200, 1000);
-    break;
-  case 6: 
-    fill(400, 200, 000);
-    break;
-  case 7: 
-    fill(0, 0, 500);
-    break;
-  case 8: 
-    fill(500, 0, 0);
-    break;
-  case 9: 
-    fill(0, 500, 0);
-    break;
-  case 10: 
-    fill(500, 200, 200);
-    break;
-  case 11: 
-    fill(50, 50, 200);
-    break;
-  case 12: 
-    fill(500, 500, 500);
-    break;
-  case 13: 
-    fill(1000, 1000, 1000);
-    break;
-  default:
-    fill(0, 0, 0);
-    break;
-  }
-}
-
-void mousePressed() {
-  mouseClicked();
-}
-
-void mouseDragged() {
-  mouseClicked();
-}
-
-void mouseClicked() {
-  for (int i = 0; i < CantidadFilas; i++) {
-    for (int j = 0; j < CantidadFilas; j++) {
-      if (mouseX > AnchoCuadro*i && mouseX < AnchoCuadro*(i+1) &&
-        mouseY > AnchoCuadro*j && mouseY < AnchoCuadro*(j+1)) {
-        PantallaBT[i][j] = ColorSelecionado;
-      }
-    }
-  }
-
-  for (int i = 0; i < CantidadColores; i++) {
-    if (mouseX > ColorFilas*i && mouseX < ColorFilas*(i+1) &&
-      mouseY > AnchoCuadro*CantidadFilas && mouseY < AnchoCuadro*CantidadFilas + ColorFilas*1.5) {
-      ColorSelecionado = i;
-    }
-  }
-
-  for (int i = 0; i < CantidadColores; i++) {
-    if (mouseX > ColorFilas*i && mouseX < ColorFilas*(i+1) &&
-      mouseY > AnchoCuadro*CantidadFilas + ColorFilas*1.5 && mouseY < AnchoCuadro*CantidadFilas + ColorFilas*3) {
-      ColorSelecionado = i+CantidadColores;
-    }
-  }
 }
