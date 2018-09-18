@@ -27,6 +27,21 @@ void InicializarSD() {
 
 }
 
+void AgregarAchivo(const char * path, const String message) {
+  File Archivo = SD.open(path, FILE_APPEND);
+  if (!Archivo) {
+    Serial.println("Error con estribier archivo");
+    return;
+  }
+  if (Archivo.print(message)) {
+    Serial.print("Grabando en Archivo: ");
+    Serial.println(path);
+  } else {
+    Serial.println("Append failed");
+  }
+  Archivo.close();
+}
+
 void CargarToken() {
   int EstadoBusqueda = 0;
   int Actualizar = 0;
@@ -80,3 +95,4 @@ void CargarToken() {
   Serial.println(Facebook_KEY);
   file.close();
 }
+

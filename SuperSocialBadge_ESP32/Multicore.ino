@@ -4,9 +4,7 @@ void MultiCore( void * pvParameters ) {
   IniciarNeoPizel();
   MostarNumero(9999, CantidadDisplay);
   while (true) {
-    if (digitalRead(Boton) == 0) {
-      Serial.println("Preciono Boton");
-    }
+
     switch (Modo) {
       case Menu:
 
@@ -38,11 +36,21 @@ void MultiCore( void * pvParameters ) {
       case App:
 
         break;
+      case Rastreo:
+        if (GPSActivo) {
+          digitalWrite(LedIndicador, 0);
+          delay(50);
+          digitalWrite(LedIndicador, 1);
+          delay(50);
+        }
+        else {
+          digitalWrite(LedIndicador, 0);
+          delay(500);
+          digitalWrite(LedIndicador, 1);
+          delay(500);
+        }
+        break;
     }
-    digitalWrite(LedIndicador, 0);
-    delay(500);
-    digitalWrite(LedIndicador, 1);
-    delay(500);
     ActualizarNeoPixel();
   }
 }
@@ -86,7 +94,3 @@ int SiquienteRed(int Actual) {
 #endif
   }
 }
-
-
-
-
