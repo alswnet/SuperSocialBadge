@@ -2,6 +2,7 @@
 #include "SD.h"
 #include "SPI.h"
 
+#define BTNombre 6
 const char *ArchivoToken = "/Token.txt";
 
 void InicializarSD() {
@@ -57,12 +58,17 @@ void CargarToken() {
     switch (EstadoBusqueda) {
       case 0:
         if (Mensaje == 'Y' || Mensaje == 'y') {
-          EstadoBusqueda = Youtube;
-          Actualizar = 1;
+          EstadoBusqueda = 1;
+          Actualizar = Youtube;
         }
         else if (Mensaje == 'F' || Mensaje == 'f') {
-          EstadoBusqueda = Facebook;
-          Actualizar = 1;
+          EstadoBusqueda = 1;
+          Actualizar = Facebook;
+        }
+        else if (Mensaje == 'B' || Mensaje == 'b') {
+          EstadoBusqueda = 1;
+          NombreBT = "";
+          Actualizar = BTNombre;
         }
         break;
       case 1:
@@ -73,13 +79,16 @@ void CargarToken() {
       case 2:
         if (Mensaje == '\n') {
           EstadoBusqueda = 0;
-          Actualizar = 1;
+          Actualizar = 0;
         }
         else if (Actualizar == Youtube) {
           YOUTUBE_KEY = YOUTUBE_KEY + Mensaje;
         }
         else if (Actualizar == Facebook) {
           Facebook_KEY = Facebook_KEY + Mensaje;
+        }
+        else if (Actualizar == BTNombre) {
+          NombreBT = NombreBT + Mensaje;
         }
         break;
       default:
@@ -93,6 +102,11 @@ void CargarToken() {
 
   Serial.print("Facebook Token: ");
   Serial.println(Facebook_KEY);
+
+
+  Serial.print("Nombre BT: ");
+  Serial.println(NombreBT);
   file.close();
+  delay(10000);
 }
 

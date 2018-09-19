@@ -10,6 +10,7 @@
 #define Fila 3
 #define ColorBT 4
 #define PlayBT 5
+#define PintarPantalla 6
 
 
 char MensajeBT[5];
@@ -22,8 +23,9 @@ BluetoothSerial SerialBT;
 int EstadoBT = 0;
 
 void ActivarBluetooth() {
-  SerialBT.begin("SSB1");
+  SerialBT.begin(NombreBT);
   Serial.println("Iniciando BT");
+  delay(50);
   for (int f = 0; f < CantidadLado; f++) {
     for (int c = 0; c < CantidadLado; c++) {
       PantallaBT[f][c] = 0;
@@ -83,12 +85,12 @@ void LeerBluetooth() {
         else {
           MensajeBT[PunteroBT] = 0;
           PantallaBT[PC][PF] = atoi(MensajeBT);
-          Serial.print("PC ");
-          Serial.print(PC);
-          Serial.print(" PF ");
-          Serial.print(PF);
-          Serial.print(" Color ");
-          Serial.println( PantallaBT[PF][PC]);
+          /* Serial.print("PC ");
+            Serial.print(PC);
+            Serial.print(" PF ");
+            Serial.print(PF);
+            Serial.print(" Color ");
+            Serial.println( PantallaBT[PF][PC]);*/
           MostarPTBT();
           EstadoBT = Esperando;
           SiquienteActualizar(Mensaje);
@@ -129,6 +131,23 @@ void LeerBluetooth() {
               Serial.println("Error no existe el archivo");
             }
           }
+          EstadoBT = Esperando;
+          SiquienteActualizar(Mensaje);
+        }
+        break;
+      case PintarPantalla:
+        if (Mensaje >= '0' and Mensaje <= '9') {
+          MensajeBT[PunteroBT] = Mensaje;
+          PunteroBT++;
+        } else {
+          MensajeBT[PunteroBT] = 0;
+          int Numero = atoi(MensajeBT);
+          for (int f = 0; f < CantidadLado; f++) {
+            for (int c = 0; c < CantidadLado; c++) {
+              PantallaBT[f][c] = Numero;
+            }
+          }
+          MostarPTBT();
           EstadoBT = Esperando;
           SiquienteActualizar(Mensaje);
         }
@@ -176,7 +195,10 @@ void SiquienteActualizar(char Mensaje) {
     Serial.println("PLAY");
     EstadoBT = PlayBT;
   }
-
+  else if (Mensaje == 'S' || Mensaje == 's') {
+    Serial.println("Color Solido");
+    EstadoBT = PintarPantalla;
+  }
 
   MensajeBT[0] = 0;
   PunteroBT = 0;

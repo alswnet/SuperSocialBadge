@@ -18,7 +18,7 @@
 #define Social 1
 #define App 2
 #define Rastreo 3
-unsigned int Modo = Rastreo;
+unsigned int Modo = Social;
 
 #define Negro 0
 #define Blanco 1
@@ -37,7 +37,6 @@ const unsigned long ValocidadBarrido = 300;
 const unsigned long EsperaEstreConsulta = 1000;//cada n/1000 segundos
 const unsigned long EsperaCambioDisplay = 10000;//cada n/1000 Segundo
 const unsigned int LedIndicador = 5;
-int Boton = 0;
 const unsigned int CantidadDisplay = 4;
 const unsigned int CantidadLado = 16;
 boolean GPSActivo = false;
@@ -45,11 +44,22 @@ unsigned int Mostar = 1;
 unsigned int Estado = 0;
 unsigned int Sub[3] = {0, 0, 0};
 unsigned int SubAnterior[3] = {0, 0, 0};
+int Boton = 0;
+String NombreBT = "SSB";
+
+#define Arriba 0
+#define Abajo 1
+#define Izquierda 2
+#define Derecha 3
+#define Enter 4
+int Botones[5] = {39, 35, 36, 32, 37};
 
 void setup() {
-
   pinMode(LedIndicador, OUTPUT);
   pinMode(Boton, INPUT_PULLUP);
+  for (int i = 0; i < 5; i++) {
+    pinMode(Botones[i], INPUT);
+  }
   Serial.begin(115200);
 
   //Activando codig a cargarse en procesador 0
@@ -114,7 +124,7 @@ void loop() {
     else {
      Serial.println("Apagaso boton");
     }*/
-  //delay(200);
+  delay(10);
 }
 
 
