@@ -1,8 +1,9 @@
-
+//TODO: dejar jugar antes de conectarse
 void mousePressed() {
   PrecionarPantalla();
   PrecionarColor();
   PrecionarFrame();
+  PrecionarConectar();
 }
 
 void mouseDragged() {
@@ -13,6 +14,7 @@ void mouseClicked() {
   PrecionarPantalla();
   PrecionarColor();
   PrecionarFrame();
+  PrecionarConectar();
 }
 
 void PrecionarColor() {
@@ -28,6 +30,8 @@ void PrecionarColor() {
         for (int c = 0; c<CantidadFilas; c++) {
           for (int f = 0; f<CantidadFilas; f++) {
             PantallaBT[c][f] = ColorSelecionado;
+            PantallaBTAnterior[c][f] = ColorSelecionado;
+            ColorFull(ColorSelecionado);
           }
         }
       }
@@ -59,5 +63,13 @@ void PrecionarFrame() {
         return;
       }
     }
+  }
+}
+
+void PrecionarConectar() {
+  if (mouseY > AnchoCuadro*CantidadFilas + ColorFilas*3+AnchoFrame) {
+    //Crea una nueva lista de seleccion en pantalla para que el
+    //usuario elija un dispositivo bluetooth
+    KetaiList klist = new KetaiList(this, listaDisp);
   }
 }

@@ -28,6 +28,40 @@ void InicializarSD() {
 
 }
 
+void GuardarValor(const char * path, int message) {
+  File Archivo = SD.open(path, FILE_APPEND);
+  if (!Archivo) {
+    Serial.println("Error con estribier archivo");
+    return;
+  }
+  if (Archivo.print(message)) {
+    Serial.print("Grabando en Archivo: ");
+    Serial.println(path);
+  } else {
+    Serial.println("Append failed");
+  }
+  Archivo.close();
+
+}
+
+int LeerValor(const char * path) {
+  char AregloNumero[10];
+  int PunteroAreglo = 0;
+  File file = SD.open(path);
+  if (!file) {
+    return 0;
+  }
+
+  while (file.available()) {
+    char Letra = file.read();
+    AregloNumero[PunteroAreglo] = Letra;
+    PunteroAreglo++;
+  }
+  AregloNumero[PunteroAreglo] = 0;
+  file.close();
+  return atoi(AregloNumero);
+}
+
 void AgregarAchivo(const char * path, const String message) {
   File Archivo = SD.open(path, FILE_APPEND);
   if (!Archivo) {

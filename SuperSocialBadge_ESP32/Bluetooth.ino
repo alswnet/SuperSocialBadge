@@ -59,7 +59,7 @@ void LeerBluetooth() {
           PC = atoi(MensajeBT);
           Serial.print("PC ");
           Serial.println(PC);
-          Estado = Esperando;
+          EstadoBT = Esperando;
           SiquienteActualizar(Mensaje);
         }
         break;
@@ -73,7 +73,7 @@ void LeerBluetooth() {
           PF = atoi(MensajeBT);
           Serial.print("PF ");
           Serial.println(PF);
-          Estado = Esperando;
+          EstadoBT = Esperando;
           SiquienteActualizar(Mensaje);
         }
         break;

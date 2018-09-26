@@ -7,6 +7,7 @@ KetaiBluetooth Kbt;
 KetaiSensor Ksen;
 ArrayList listaDisp;
 
+String NombreBT;
 int CantidadFilas = 16 ;
 int CantidadColores = 7;
 int CantidadBoton = 5;
@@ -41,34 +42,35 @@ void setup() {
     println(itr.next());
   }
 
-  colorMode(RGB, height, height, height);
+  colorMode(RGB, 100);
   rectMode(CORNER);
   AnchoCuadro = float(width)/CantidadFilas;
   ColorFilas = float(width)/CantidadColores;
   AnchoFrame = float(width)/CantidadBoton;
   for (int i = 0; i< CantidadFilas; i++) {
     for (int j = 0; j< CantidadFilas; j++) {
-      PantallaBT[i][j] = 1;
+      PantallaBT[i][j] = 0;
+      PantallaBTAnterior[i][j] = 0;
     }
   }
 }
 
 void draw() {
-
-
   background(50);
   MostarColores();
   MostarPantalla();
-  MostarBoton();
+  MostarFrama();
+  MostrarConectar();
+  MandadBT();
 }
 
-void MostarBoton() {
+void MostarFrama() {
   pushMatrix();
   pushStyle();
   translate(0, AnchoCuadro*CantidadFilas + ColorFilas*3);
   for (int i = 0; i < CantidadBoton; i++) {
     fill(200);
-    rect(AnchoFrame*i, 0, AnchoFrame, AnchoFrame*0.75);
+    rect(AnchoFrame*i, 0, AnchoFrame, AnchoFrame);
     fill(1000, 0, 0);
     textSize(30);
     text(i, AnchoFrame*i+AnchoFrame/2, AnchoFrame/2);
@@ -88,6 +90,7 @@ void MostarPantalla() {
   }
 }
 
+
 void MostarColores() {
   pushMatrix();
   pushStyle();
@@ -102,6 +105,20 @@ void MostarColores() {
     ColorActual(i+CantidadColores);
     rect(  ColorFilas*i, ColorFilas*1.5, ColorFilas, ColorFilas*1.5);
   }
+  popStyle();
+  popMatrix();
+}
+
+void MostrarConectar() {
+  pushMatrix();
+  pushStyle();
+  fill(0, 1000, 0);
+  translate(0, AnchoCuadro*CantidadFilas + ColorFilas*3+AnchoFrame);
+  rect( 0, 0, width, height-(AnchoCuadro*CantidadFilas + ColorFilas*3+AnchoFrame) );
+  fill(0);
+  textSize(80);
+  textAlign(CENTER, CENTER);
+  text("Concectar", width/2, (height-(AnchoCuadro*CantidadFilas + ColorFilas*3+AnchoFrame))/2);
   popStyle();
   popMatrix();
 }

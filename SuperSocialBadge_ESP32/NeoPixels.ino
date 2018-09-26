@@ -1,9 +1,10 @@
 #include <Adafruit_NeoPixel.h>
-Adafruit_NeoPixel strip = Adafruit_NeoPixel(13, 256, NEO_GRB + NEO_KHZ800);
+int PinNeoPixel = 25;
+Adafruit_NeoPixel strip = Adafruit_NeoPixel(PinNeoPixel, 256, NEO_GRB + NEO_KHZ800);
 
 int IntensidadPantalla = 255;
 
-void IniciarNeoPizel() {
+void IniciarNeoPixel() {
   strip.begin();
 }
 
@@ -75,4 +76,5 @@ void colorWipe(int c, int esperar) {
     delay(esperar);
   }
 }
+
 

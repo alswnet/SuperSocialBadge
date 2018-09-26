@@ -1,5 +1,5 @@
-byte segmentClock = 3;
-byte segmentLatch = 3;
+byte segmentClock = 27;
+byte segmentLatch = 14;
 byte segmentData = 12;
 
 void InicializarPantallas() {
@@ -48,6 +48,29 @@ void MostarNumero(float Valor, int Digitos) {
   digitalWrite(segmentLatch, HIGH);
 }
 
+void pruevaLetras() {
+  //for (int j = 0; j < 8; j++) {
+  int j = 7;
+  for (byte x = 0 ; x < 8 ; x++) {
+    digitalWrite(segmentClock, LOW);
+    if (x != j) {
+      digitalWrite(segmentData, 1);
+    }
+    else {
+      digitalWrite(segmentData, 0);
+    }
+    digitalWrite(segmentClock, HIGH);
+  }
+
+  digitalWrite(segmentLatch, LOW);
+  digitalWrite(segmentLatch, HIGH);
+  Serial.println(char('a' + j));
+  delay(500);
+  // }
+  // Serial.println("Siquiente");
+
+}
+
 void postNumber(byte number, boolean decimal) {
 
   //     --     A
@@ -55,15 +78,25 @@ void postNumber(byte number, boolean decimal) {
   //     --     G
   //   /    /   E/C
   //     --     D/DP
+  /*
+    #define a  1<<9
+    #define b  1<<6
+    #define c  1<<5
+    #define d  1<<4
+    #define e  1<<3
+    #define f  1<<1
+    #define g  1<<2
+    #define dp 1<<7
+  */
 
-#define a  1<<0
+#define a  1<<7
 #define b  1<<6
-#define c  1<<5
-#define d  1<<4
+#define c  1<<1
+#define d  1<<2
 #define e  1<<3
-#define f  1<<1
-#define g  1<<2
-#define dp 1<<7
+#define f  1<<5
+#define g  1<<4
+#define dp 1<<0
 
   byte segments;
   switch (number)  {
@@ -88,4 +121,5 @@ void postNumber(byte number, boolean decimal) {
     digitalWrite(segmentClock, HIGH);
   }
 }
+
 

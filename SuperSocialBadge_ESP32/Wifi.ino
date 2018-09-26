@@ -1,4 +1,6 @@
 //Configuraciones de RED
+char ssid4[] = "MENDEZ";       // your network SSID (name)
+char password4[] = "vigil2012";
 char ssid3[] = "G_WIFI"; //Nombre de Red 1
 char password3[] = "Medicina09";  //Contrasenna de Red 1
 char ssid2[] = "ALSW"; //Nombre de Red 2
@@ -11,6 +13,7 @@ void ConectarWifi() {
   wifiMulti.addAP(ssid1, password1);
   wifiMulti.addAP(ssid2, password2);
   wifiMulti.addAP(ssid3, password3);
+  wifiMulti.addAP(ssid4, password4);
 
   Serial.println("Conectando con Wifi...");
   if (wifiMulti.run() == WL_CONNECTED) {
@@ -25,5 +28,8 @@ void WifiActiva() {
   if (wifiMulti.run() != WL_CONNECTED) {
     Serial.println("Wifi No Conectada!");
     delay(1000);
-  }
+  }else {
+    EstadoPantalla = 3;
+    }
 }
+

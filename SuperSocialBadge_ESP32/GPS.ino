@@ -20,7 +20,7 @@ void Leergps() {
 
       if (Mensaje.indexOf("GPRMC") > 0 ) {
         if ( Mensaje.indexOf(",,,,,,") == -1 ) {
-          AgregarAchivo("/ViajeSanMiguel.txt", Mensaje);
+          AgregarAchivo("/GPS24Sep.txt", Mensaje);
           GPSActivo = true;
         }
         else {
@@ -29,7 +29,7 @@ void Leergps() {
         Serial.print("Mensaje: ");
         Serial.println(Mensaje);
 
-        delay(100);
+        delay(10);
       }
       return;
     }

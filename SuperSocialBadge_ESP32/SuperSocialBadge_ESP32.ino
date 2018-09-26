@@ -7,8 +7,8 @@
 
 //ID de Redes Sociales
 #define InstagramID "alswnet"//usuario ALSW de Insgramam
-#define FacebookID "163069780414846"//ID ALSW de fanpage de Facebook
-#define YoutubeID "UCS5yb75qx5GFOG-uV5JLYlQ" // ID ALSW de Canal de Youtube
+//#define FacebookID "163069780414846"//ID ALSW de fanpage de Facebook
+//#define YoutubeID "UCS5yb75qx5GFOG-uV5JLYlQ" // ID ALSW de Canal de Youtube
 
 #define Facebook 0
 #define Youtube 1
@@ -18,7 +18,7 @@
 #define Social 1
 #define App 2
 #define Rastreo 3
-unsigned int Modo = Social;
+unsigned int Modo = Rastreo;
 
 #define Negro 0
 #define Blanco 1
@@ -37,11 +37,11 @@ const unsigned long ValocidadBarrido = 300;
 const unsigned long EsperaEstreConsulta = 1000;//cada n/1000 segundos
 const unsigned long EsperaCambioDisplay = 10000;//cada n/1000 Segundo
 const unsigned int LedIndicador = 5;
-const unsigned int CantidadDisplay = 4;
+const unsigned int CantidadDisplay = 5;
 const unsigned int CantidadLado = 16;
 boolean GPSActivo = false;
 unsigned int Mostar = 1;
-unsigned int Estado = 0;
+unsigned int EstadoPantalla = 0;
 unsigned int Sub[3] = {0, 0, 0};
 unsigned int SubAnterior[3] = {0, 0, 0};
 int Boton = 0;
@@ -76,7 +76,6 @@ void setup() {
   delay(100);
 
   InicializarSD();
-  IniciarNeoPizel();
   CargarToken();
 
   switch (Modo) {
@@ -85,7 +84,7 @@ void setup() {
     case Social:
       ConectarWifi();
       CargarSocial();
-      Estado = 1;
+      EstadoPantalla = 1;
       break;
     case App:
       ActivarBluetooth();
@@ -95,7 +94,7 @@ void setup() {
       break;
   }
   delay(200);
-  Estado = 2;
+  EstadoPantalla = 1;
 }
 
 void loop() {

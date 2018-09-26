@@ -6,6 +6,7 @@ FacebookApi *apifb;
 void IniciarFacebook() {
   apifb = new FacebookApi(client, Facebook_KEY);
 }
+#define FacebookID "163069780414846"//ID ALSW de fanpage de Facebook
 
 //TODO Guardas SD
 //Consulta para buscar los seguidores una Fanpage de Facebook
@@ -20,4 +21,3 @@ boolean getFacebook() {
   return false;
 }
 #endif
-
