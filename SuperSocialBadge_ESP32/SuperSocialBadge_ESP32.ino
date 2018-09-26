@@ -44,22 +44,24 @@ unsigned int Mostar = 1;
 unsigned int EstadoPantalla = 0;
 unsigned int Sub[3] = {0, 0, 0};
 unsigned int SubAnterior[3] = {0, 0, 0};
-int Boton = 0;
+//int Boton = 0;
 String NombreBT = "SSB";
+
+int IntensidadPantalla = 255;
 
 #define Arriba 0
 #define Abajo 1
 #define Izquierda 2
 #define Derecha 3
 #define Enter 4
+
 int Botones[5] = {39, 35, 36, 32, 37};
+boolean EstadoBotones[5] = { false, false, false, false, false};
 
 void setup() {
   pinMode(LedIndicador, OUTPUT);
-  pinMode(Boton, INPUT_PULLUP);
-  for (int i = 0; i < 5; i++) {
-    pinMode(Botones[i], INPUT);
-  }
+  InicializarBotones();
+
   Serial.begin(115200);
 
   //Activando codig a cargarse en procesador 0
