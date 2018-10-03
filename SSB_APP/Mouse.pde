@@ -31,9 +31,9 @@ void PrecionarColor() {
           for (int f = 0; f<CantidadFilas; f++) {
             PantallaBT[c][f] = ColorSelecionado;
             PantallaBTAnterior[c][f] = ColorSelecionado;
-            ColorFull(ColorSelecionado);
           }
         }
+        ColorFull(ColorSelecionado);
       }
       ColorSelecionadoAnterior = ColorSelecionado;
       TiempoColor = millis();

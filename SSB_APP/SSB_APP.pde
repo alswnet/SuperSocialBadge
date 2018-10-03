@@ -8,7 +8,7 @@ KetaiSensor Ksen;
 ArrayList listaDisp;
 
 String NombreBT;
-int CantidadFilas = 16 ;
+int CantidadFilas = 15 ;
 int CantidadColores = 7;
 int CantidadBoton = 5;
 int ColorSelecionado = 3;
